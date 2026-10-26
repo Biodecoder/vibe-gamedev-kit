@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Vibe Game-Dev Kit (VGDK) — AI Rulebook & Interactive 2D Island Command Center</title>
+  <meta name="theme-color" content="#47aba9" />
+  <link rel="preload" as="image" href="/game/islands/island-hero.png" fetchpriority="high" />
+  <link rel="preload" as="image" href="/game/strips/terrain-tileset-water-foam.png" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- Fixed Wooden RPG Top Header -->
+  <header class="wood-header">
+    <a href="#top" class="brand-link text-shadow-ink" id="brand-title">Vibe Game-Dev Kit (VGDK)</a>
+    <nav class="header-nav" aria-label="Main">
+      <a href="#problems" class="text-shadow-ink" data-i18n="nav/problems">Game Bugs</a>
+      <a href="#compare" class="text-shadow-ink">With vs Without</a>
+      <a href="#helpers" class="text-shadow-ink" data-i18n="nav/helpers">9 Helpers</a>
+      <a href="#workshop-center" class="text-shadow-ink" data-i18n="nav/workshop">Command Center</a>
+      <a href="#steps" class="text-shadow-ink" data-i18n="nav/steps">How to Start</a>
+      <a href="#price" class="text-shadow-ink" data-i18n="nav/price">Deploy Kit</a>
+      <a href="#faq" class="text-shadow-ink" data-i18n="nav/faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <button type="button" id="btn-toggle-edition" class="chip mode-switch-btn" title="Switch between Game-Dev Edition (VGDK) and Classic Camera.ai.vn (MVCK)">
+        <span class="mode-dot"></span>
+        <span id="edition-label">Mode: Game-Dev Edition</span>
+      </button>
+      <a href="#workshop-center" class="btn btn-primary" style="min-height:42px;padding:6px 16px;font-size:15px;" data-i18n="cta/buy">Open Game Workshop</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Drifting Pixel Clouds Layer -->
+    <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;z-index:5;overflow:hidden;">
+      <img src="/game/ui/cloud-1.png" alt="" class="cloud pixel" style="top:2%;opacity:0.55;animation-duration:80s;animation-delay:-20s;" />
+      <img src="/game/ui/cloud-3.png" alt="" class="cloud pixel" style="top:12%;opacity:0.7;animation-duration:110s;animation-delay:-70s;" />
+      <img src="/game/ui/cloud-2.png" alt="" class="cloud pixel" style="top:26%;opacity:0.6;animation-duration:95s;animation-delay:-40s;" />
+      <img src="/game/ui/cloud-5.png" alt="" class="cloud pixel" style="top:42%;opacity:0.5;animation-duration:88s;animation-delay:-10s;" />
+      <img src="/game/ui/cloud-6.png" alt="" class="cloud pixel" style="top:58%;opacity:0.6;animation-duration:100s;animation-delay:-55s;" />
+      <img src="/game/ui/cloud-7.png" alt="" class="cloud pixel" style="top:74%;opacity:0.7;animation-duration:120s;animation-delay:-30s;" />
+      <img src="/game/ui/cloud-2.png" alt="" class="cloud pixel" style="top:88%;opacity:0.6;animation-duration:92s;animation-delay:-65s;" />
+    </div>
+
+    <!-- Swimming Sea Pests Layer -->
+    <div id="sea-pests-container" class="sea-pest-layer"></div>
+
+    <!-- 1. HERO ISLAND SECTION -->
+    <section id="top" class="page-section hero-section">
+      <!-- Ambient Rubber Duck & Water Rocks -->
+      <span aria-hidden="true" class="duck" style="right:120px;bottom:24px;">
+        <span class="pixel" style="display:block;width:32px;height:23px;background-image:url(/game/strips/terrain-decorations-rubber-duck-rubber-duck.png);background-position:0 -5px;"></span>
+      </span>
+
+      <div class="panel hero-card">
+        <span class="badge-gold" data-i18n="brand/name">Vibe Game-Dev Kit (VGDK)</span>
+        <h1 class="hero-title" data-i18n="hero/title">A ready-made AI rulebook &amp; village workshop for your game development.</h1>
+        <p class="hero-sub" data-i18n="hero/body"></p>
+        <p class="hero-muted" data-i18n="hero/works_with"></p>
+        <div class="hero-btn-row">
+          <a href="#helpers" class="btn btn-primary" data-i18n="hero/cta_primary">Explore the Village</a>
+          <a href="#workshop-center" class="btn btn-secondary" data-i18n="cta/buy">Open Game Workshop</a>
+        </div>
+        <div class="vibe-callout">
+          <p style="font-weight:800;" data-i18n="hero/vibe_q"></p>
+          <p data-i18n="hero/vibe_a"></p>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+        <div id="scene-hero"></div>
+        <p class="chip" style="display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:999px;font-weight:700;font-size:16px;">
+          <img src="/game/ui/icon-info.png" alt="" width="24" height="24" class="pixel" />
+          <span data-i18n="hero/hint">Tap any numbered villager on the island to inspect their skill.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- 2. PROBLEMS MONSTER ISLAND SECTION -->
+    <section id="problems" class="page-section">
+      <div class="wood-banner-wrap">
+        <h2 class="wood-banner text-shadow-ink" data-i18n="problems/title"></h2>
+        <p class="chip wood-banner-sub" data-i18n="problems/hint"></p>
+      </div>
+      <div style="display:flex;justify-content:center;">
+        <div id="scene-problems"></div>
+      </div>
+      <ul id="problems-grid" class="problems-grid"></ul>
+    </section>
+
+    <!-- 3. WITH VS WITHOUT THE KIT INTERACTIVE TOGGLE -->
+    <section id="compare" class="page-section">
+      <div class="wood-banner-wrap">
+        <h2 class="wood-banner text-shadow-ink" data-i18n="compare/title"></h2>
+      </div>
+      <div class="compare-layout">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <div id="scene-compare"></div>
+        </div>
+        <div>
+          <button type="button" id="btn-compare-toggle" class="panel compare-toggle-btn" aria-pressed="true">
+            <span id="lbl-compare-without" style="color:var(--color-muted-ink);" data-i18n="compare/without">Without VGDK</span>
+            <span id="compare-switch-track" class="switch-track on">
+              <span class="switch-thumb"></span>
+            </span>
+            <span id="lbl-compare-with" style="font-weight:800;" data-i18n="compare/with">With VGDK</span>
+            <span style="color:var(--color-muted-ink);font-size:15px;margin-left:6px;" data-i18n="compare/switch">Toggle the kit on</span>
+          </button>
+          <div id="compare-rows" class="compare-rows"></div>
+        </div>
+      </div>
+      <p class="chip" style="max-width:960px;margin:22px auto 0;padding:12px 20px;display:flex;align-items:center;gap:12px;font-weight:700;">
+        <img src="/game/ui/icon-info.png" alt="" width="24" height="24" class="pixel" />
+        <span data-i18n="compare/note"></span>
+      </p>
+    </section>
+
+    <!-- 4. THE 9 VILLAGE HELPERS ACROSS 3 ISLAND DISTRICTS -->
+    <section id="helpers" class="page-section">
+      <div class="wood-banner-wrap">
+        <h2 class="wood-banner text-shadow-ink" data-i18n="village/title">Meet the 9 Game-Dev Village Helpers</h2>
+        <p class="chip wood-banner-sub" data-i18n="village/sub"></p>
+      </div>
+      <div id="districts-container" class="district-list"></div>
+    </section>
+
+    <!-- 5. LIVE GAME-DEV COMMAND CENTER (THE RUMORED VILLAGER WORKSHOP!) -->
+    <section id="workshop-center" class="page-section">
+      <div class="wood-banner-wrap">
+        <h2 class="wood-banner text-shadow-ink">Live Game-Dev Command Center (Villager Workshop)</h2>
+        <p class="chip wood-banner-sub">
+          Inspect all 28 game projects in <code>/Users/derya/Gemini-4</code>, run 9-Helper Village Doctor diagnostics, and generate or install <code>backbone.yml</code> + <code>AGENTS.md</code> + <code>.vibekit/skills</code> in one click.
+        </p>
+      </div>
+
+      <div class="panel workshop-shell">
+        <div class="workshop-top-bar">
+          <div class="game-select-group">
+            <label for="workspace-game-select" style="font-weight:800;font-size:18px;">Target Workspace Game:</label>
+            <select id="workspace-game-select" class="game-select"></select>
+            <button type="button" id="btn-run-doctor" class="btn btn-secondary" style="min-height:44px;padding:6px 16px;">
+              <img src="/game/ui/icon-shield.png" alt="" width="22" height="22" class="pixel" />
+              Run Village Doctor
+            </button>
+          </div>
+          <div id="selected-game-pills" class="game-meta-pills"></div>
+        </div>
+
+        <div class="workshop-grid">
+          <!-- Left: 9 Village Helpers Live Doctor Report -->
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <h3 style="font-size:20px;font-weight:800;">9 Village Helpers Readiness Report</h3>
+              <span id="doctor-score-badge" class="badge-gold">9/9 Ready</span>
+            </div>
+            <div id="doctor-checks-list" class="doctor-checks-grid"></div>
+          </div>
+
+          <!-- Right: Rulebook & Backbone Configurator + 1-Click Installer -->
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <h3 style="font-size:20px;font-weight:800;">Configure &amp; Deploy Kit to Selected Game</h3>
+            <div class="config-box">
+              <div class="config-row">
+                <span>Target Frame Rate Budget:</span>
+                <select id="cfg-target-fps" class="config-input">
+                  <option value="60" selected>60 FPS (16.6 ms hot-loop gate)</option>
+                  <option value="120">120 FPS (8.3 ms ProMotion gate)</option>
+                  <option value="30">30 FPS (Cinematic / Turn-based)</option>
+                </select>
+              </div>
+              <div class="config-row">
+                <span>Max Draw Calls Budget:</span>
+                <input type="number" id="cfg-draw-calls" class="config-input" value="250" min="30" max="2000" style="width:110px;" />
+              </div>
+              <div class="config-row">
+                <span>Default Explanation Level (<code>/wait-what</code>):</span>
+                <select id="cfg-coding-level" class="config-input">
+                  <option value="1">Level 1 — Indie Producer</option>
+                  <option value="2">Level 2 — Technical Game Designer</option>
+                  <option value="3" selected>Level 3 — Gameplay Programmer</option>
+                  <option value="4">Level 4 — Shader &amp; Engine Architect</option>
+                  <option value="5">Level 5 — Deep REA / Systems Proof</option>
+                </select>
+              </div>
+              <div class="config-row">
+                <span>Safe Asset Delete (<code>.trash</code> first):</span>
+                <input type="checkbox" id="cfg-trash-first" checked style="width:22px;height:22px;" />
+              </div>
+
+              <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;">
+                <button type="button" id="btn-preview-kit" class="btn btn-secondary" style="flex:1;min-height:44px;font-size:15px;">
+                  Preview backbone.yml
+                </button>
+                <button type="button" id="btn-dryrun-kit" class="btn btn-teal" style="flex:1;min-height:44px;font-size:15px;">
+                  Dry-Run Install
+                </button>
+                <button type="button" id="btn-install-kit" class="btn btn-primary" style="flex:1.2;min-height:44px;font-size:15px;">
+                  <img src="/game/ui/icon-hammer.png" alt="" width="22" height="22" class="pixel" />
+                  Install Kit to Game
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                <span id="preview-box-title" style="font-size:14px;font-weight:800;color:var(--color-muted-ink);">Generated backbone.yml &amp; CLI Command</span>
+                <button type="button" id="btn-copy-cli" class="chip" style="padding:3px 10px;font-size:13px;font-weight:700;">Copy CLI Command</button>
+              </div>
+              <pre id="workshop-code-preview" class="code-preview-box">Loading workspace games...</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. START IN 3 STEPS -->
+    <section id="steps" class="page-section">
+      <div class="wood-banner-wrap">
+        <h2 class="wood-banner text-shadow-ink" data-i18n="steps/title">Start in 3 Steps</h2>
+      </div>
+      <ol class="steps-grid">
+        <li class="panel" style="padding:24px;display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="helper-badge-num" style="width:44px;height:44px;font-size:20px;">1</span>
+            <img src="/game/ui/icon-coin.png" alt="" width="44" height="44" class="pixel" />
+          </div>
+          <p style="font-size:19px;font-weight:600;" data-i18n="steps/s1"></p>
+        </li>
+        <li class="panel" style="padding:24px;display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="helper-badge-num" style="width:44px;height:44px;font-size:20px;">2</span>
+            <img src="/game/ui/icon-hammer.png" alt="" width="44" height="44" class="pixel" />
+          </div>
+          <p style="font-size:19px;font-weight:600;" data-i18n="steps/s2"></p>
+        </li>
+        <li class="panel" style="padding:24px;display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="helper-badge-num" style="width:44px;height:44px;font-size:20px;">3</span>
+            <img src="/game/ui/icon-play.png" alt="" width="44" height="44" class="pixel" />
+          </div>
+          <p style="font-size:19px;font-weight:600;" data-i18n="steps/s3"></p>
+        </li>
+      </ol>
+      <p class="chip" style="max-width:960px;margin:22px auto 0;padding:12px 20px;display:flex;align-items:center;gap:12px;font-weight:700;background:var(--color-paper-shade);">
+        <img src="/game/ui/icon-info.png" alt="" width="24" height="24" class="pixel" />
+        <span data-i18n="steps/not_app"></span>
+      </p>
+    </section>
+
+    <!-- 7. WHO IS IT FOR -->
+    <section id="who" class="page-section">
+      <div class="wood-banner-wrap">
+        <h2 class="wood-banner text-shadow-ink" data-i18n="who/title"></h2>
+      </div>
+      <ul id="who-grid" class="who-grid"></ul>
+    </section>
+
+    <!-- 8. AI TOOLS & PIXEL RIBBONS -->
+    <section id="tools" class="page-section">
+      <div class="wood-banner-wrap">
+        <h2 class="wood-banner text-shadow-ink" data-i18n="tools/title"></h2>
+      </div>
+      <ul id="tools-grid" class="tools-grid"></ul>
+      <p class="chip" style="max-width:860px;margin:22px auto 0;padding:10px 18px;text-align:center;font-size:15px;color:var(--color-muted-ink);" data-i18n="tools/note"></p>
+    </section>
+
+    <!-- 9. DEPLOY KIT ISLAND & PIG "THE BUTTON GUARD" ARENA -->
+    <section id="price" class="page-section">
+      <div class="wood-banner-wrap">
+        <h2 class="wood-banner text-shadow-ink" data-i18n="price/title"></h2>
+      </div>
+      <div class="price-top-row">
+        <div id="scene-price"></div>
+        <div class="panel" style="width:100%;max-width:580px;padding:30px;display:flex;flex-direction:column;gap:14px;">
+          <p style="font-size:34px;font-weight:800;" data-i18n="price/amount"></p>
+          <p style="font-weight:800;" data-i18n="price/what"></p>
+          <p style="display:flex;align-items:flex-start;gap:10px;">
+            <img src="/game/ui/icon-shield.png" alt="" width="24" height="24" class="pixel" />
+            <span data-i18n="price/get1"></span>
+          </p>
+          <p style="display:flex;align-items:flex-start;gap:10px;">
+            <img src="/game/ui/icon-shield.png" alt="" width="24" height="24" class="pixel" />
+            <span data-i18n="price/get2"></span>
+          </p>
+          <p style="display:flex;align-items:flex-start;gap:10px;">
+            <img src="/game/ui/icon-shield.png" alt="" width="24" height="24" class="pixel" />
+            <span data-i18n="price/get3"></span>
+          </p>
+          <p style="color:var(--color-muted-ink);font-size:15px;" data-i18n="price/updates"></p>
+          <p style="font-size:15px;">
+            <span data-i18n="price/free"></span>
+            <a href="https://github.com/giang6283623/minimal-vibe-coding-kit" target="_blank" rel="noreferrer" style="font-weight:800;text-decoration:underline;" data-i18n="price/free_cta"></a>
+          </p>
+          <p style="font-weight:700;font-size:15px;" data-i18n="author/line"></p>
+        </div>
+      </div>
+
+      <!-- Patrolling Pig Rider Arena -->
+      <div id="buy" class="arena-guard-wrap">
+        <div id="pig-speech-bubble" class="panel pig-speech-bubble">
+          <p style="font-weight:800;color:var(--color-ribbon-red-ink);" data-i18n="pig/name">The Button Guard</p>
+          <p id="pig-joke-text"></p>
+          <span class="pig-bubble-tail"></span>
+        </div>
+        <div style="position:relative;display:inline-block;max-width:100%;">
+          <div id="scene-arena"></div>
+          <div class="arena-cta-overlay">
+            <a href="#workshop-center" id="btn-arena-cta" class="btn btn-primary" data-i18n="cta/buy">Open Game Workshop</a>
+            <div style="display:flex;gap:8px;">
+              <span class="chip" style="padding:3px 12px;font-weight:800;font-size:14px;" data-i18n="price/amount">Open Local Kit</span>
+              <span class="chip" style="padding:3px 12px;font-weight:800;font-size:14px;">v1.0 VGDK</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. INTERACTIVE VILLAGER & MONK GUIDE FAQ STAGE -->
+    <section id="faq" class="page-section">
+      <div class="wood-banner-wrap">
+        <h2 class="wood-banner text-shadow-ink" data-i18n="nav/faq">FAQ</h2>
+        <p class="chip wood-banner-sub" data-i18n="faq/intro"></p>
+      </div>
+
+      <div class="faq-stage-row">
+        <figure style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <div id="faq-visitor-stage"></div>
+          <figcaption style="background:var(--color-wood-dark);color:#fff;padding:3px 12px;border-radius:6px;font-weight:800;font-size:15px;" data-i18n="faq/visitor">Game Creator</figcaption>
+        </figure>
+
+        <div class="faq-chat-bubbles">
+          <div class="chip" style="align-self:flex-start;max-width:560px;padding:16px 20px;background:var(--color-paper-shade);border-radius:16px;">
+            <p style="font-size:14px;font-weight:800;color:var(--color-muted-ink);" data-i18n="faq/visitor"></p>
+            <p id="faq-current-q" style="font-weight:800;font-size:19px;"></p>
+          </div>
+          <div class="chip" style="align-self:flex-end;max-width:640px;padding:16px 20px;border-radius:16px;">
+            <p style="font-size:14px;font-weight:800;color:var(--color-muted-ink);" data-i18n="h3/name"></p>
+            <p id="faq-current-a" style="font-size:18px;"></p>
+          </div>
+        </div>
+
+        <figure style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <div id="faq-guide-stage"></div>
+          <figcaption style="background:var(--color-ribbon-teal);color:#fff;padding:3px 12px;border-radius:6px;font-weight:800;font-size:15px;" data-i18n="h3/name">The Plain-Talk Designer</figcaption>
+        </figure>
+      </div>
+
+      <div id="faq-tabs" class="faq-q-tabs" role="tablist"></div>
+      <div style="display:flex;justify-content:center;margin-top:18px;">
+        <button type="button" id="btn-next-faq" class="btn btn-primary" data-i18n="faq/next_q">Next Question</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER STRIP ISLAND -->
+  <footer class="village-footer">
+    <div style="max-width:1344px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:24px;">
+      <p class="chip" style="padding:10px 22px;font-weight:800;">The whole Game-Dev Village waves goodbye. Tap any helper below to inspect its skill!</p>
+      <div id="scene-footer-strip"></div>
+      <div class="panel" style="width:100%;padding:22px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;font-size:15px;">
+        <div>
+          <strong>Vibe Game-Dev Kit (VGDK)</strong> · Cloned &amp; adapted from <a href="https://camera.ai.vn/" target="_blank" rel="noreferrer" style="text-decoration:underline;">camera.ai.vn</a> &amp; <a href="https://github.com/giang6283623/minimal-vibe-coding-kit" target="_blank" rel="noreferrer" style="text-decoration:underline;">minimal-vibe-coding-kit</a>.
+        </div>
+        <div>
+          Pixel Art: <strong>Tiny Swords by Pixel Frog</strong> · <a href="#top" style="font-weight:800;text-decoration:underline;">Back to Top ↑</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE VILLAGER TALK DIALOG MODAL (TalkDialog) -->
+  <div id="talk-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="talk-modal-title">
+    <div class="panel talk-modal-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span id="talk-helper-num" class="helper-badge-num">1</span>
+          <h3 id="talk-modal-title" style="font-size:24px;font-weight:800;"></h3>
+        </div>
+        <button type="button" id="btn-close-talk" class="chip" style="padding:6px 12px;display:inline-flex;align-items:center;gap:6px;font-weight:800;">
+          <img src="/game/ui/icon-close.png" alt="" width="20" height="20" class="pixel" />
+          Close
+        </button>
+      </div>
+
+      <div class="talk-modal-body">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+          <div id="talk-stage-mount"></div>
+          <button type="button" id="btn-trigger-act" class="chip" style="padding:6px 14px;font-size:14px;font-weight:800;background:var(--color-gold);">
+            Play Action Animation
+          </button>
+        </div>
+
+        <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
+          <div class="chip" style="padding:12px 16px;background:var(--color-paper-shade);">
+            <p id="talk-greet-text" style="font-weight:700;"></p>
+          </div>
+          <div>
+            <p style="font-size:13px;font-weight:800;text-transform:uppercase;color:var(--color-muted-ink);">Name in the Kit (.vibekit/skills/)</p>
+            <p id="talk-kitname-text" style="font-family:var(--font-mono);font-weight:800;font-size:16px;"></p>
+          </div>
+          <div>
+            <p style="font-size:13px;font-weight:800;text-transform:uppercase;color:var(--color-muted-ink);">My Job in Game Development</p>
+            <p id="talk-job-text"></p>
+          </div>
+          <div style="padding:10px 14px;border-radius:10px;background:#f8d7da;border:2px solid var(--color-ink);">
+            <p style="font-size:13px;font-weight:800;text-transform:uppercase;color:var(--color-ribbon-red-ink);">Without Me</p>
+            <p id="talk-without-text" style="font-size:16px;"></p>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding-top:10px;border-top:2px dashed var(--color-ink);">
+        <a href="#workshop-center" id="btn-talk-to-workshop" class="btn btn-secondary" style="min-height:42px;font-size:15px;">
+          Inspect in Workshop Command Center
+        </a>
+        <div style="display:flex;gap:10px;">
+          <button type="button" id="btn-prev-helper" class="btn btn-secondary" style="min-height:42px;font-size:15px;">← Prev</button>
+          <button type="button" id="btn-next-helper" class="btn btn-primary" style="min-height:42px;font-size:15px;">Next Helper →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>

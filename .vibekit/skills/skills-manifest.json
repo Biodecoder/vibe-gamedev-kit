@@ -1,0 +1,77 @@
+{
+  "version": 2,
+  "description": "Central distribution manifest for Vibe Game-Dev Kit (VGDK). bin/vgdk.mjs derives its skill and mirror registries from this file.",
+  "surfaces": {
+    "antigravity": ".agent/skills",
+    "claude": ".claude/skills",
+    "cursor": ".cursor/skills",
+    "codex": ".agents/skills",
+    "opencode": ".agents/skills",
+    "grok": ".grok/skills"
+  },
+  "skills": [
+    {
+      "id": "h1",
+      "name": "vgdk-init",
+      "character": "The Game Rule Learner",
+      "district": "d1",
+      "surfaces": ["antigravity", "claude", "cursor", "codex", "opencode", "grok"]
+    },
+    {
+      "id": "h2",
+      "name": "multi-agent-translator",
+      "character": "The Multi-Agent Translator",
+      "district": "d1",
+      "surfaces": ["antigravity", "claude", "cursor", "codex", "opencode", "grok"]
+    },
+    {
+      "id": "h3",
+      "name": "wait-what",
+      "character": "The Plain-Talk Designer",
+      "district": "d1",
+      "surfaces": ["antigravity", "claude", "cursor", "codex", "opencode", "grok"]
+    },
+    {
+      "id": "h4",
+      "name": "closed-loop-playtest",
+      "character": "The Playtest Promise Keeper",
+      "district": "d2",
+      "surfaces": ["antigravity", "claude", "cursor", "codex", "opencode", "grok"]
+    },
+    {
+      "id": "h5",
+      "name": "playable-loop-60fps-gate",
+      "character": "The 60FPS Forgemaster",
+      "district": "d2",
+      "surfaces": ["antigravity", "claude", "cursor", "codex", "opencode", "grok"]
+    },
+    {
+      "id": "h6",
+      "name": "rea-mechanics-decompiler",
+      "character": "The Lore & Mechanics Archaeologist",
+      "district": "d2",
+      "surfaces": ["antigravity", "claude", "cursor", "codex", "opencode", "grok"]
+    },
+    {
+      "id": "h7",
+      "name": "visual-hud-qa-loop",
+      "character": "The HUD & Visual Sentinel",
+      "district": "d3",
+      "surfaces": ["antigravity", "claude", "cursor", "codex", "opencode", "grok"]
+    },
+    {
+      "id": "h8",
+      "name": "asset-shader-pipeline-guard",
+      "character": "The Asset & Shader Warden",
+      "district": "d3",
+      "surfaces": ["antigravity", "claude", "cursor", "codex", "opencode", "grok"]
+    },
+    {
+      "id": "h9",
+      "name": "reviewing-4p-priorities",
+      "character": "The Playtest Reviewer",
+      "district": "d3",
+      "surfaces": ["antigravity", "claude", "cursor", "codex", "opencode", "grok"]
+    }
+  ]
+}

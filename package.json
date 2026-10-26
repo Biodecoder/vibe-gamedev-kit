@@ -1,0 +1,17 @@
+{
+  "name": "vibe-gamedev-kit",
+  "version": "1.0.0",
+  "description": "Vibe Game-Dev Kit (VGDK) & Interactive 2D Island Village Command Center — cloned & evolved from camera.ai.vn (Minimal Vibe Coding Kit)",
+  "type": "module",
+  "bin": {
+    "vgdk": "./bin/vgdk.mjs"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "mirror": "node scripts/mirror-camera-assets.mjs",
+    "mirror:verify": "node scripts/mirror-camera-assets.mjs --verify",
+    "scan": "node bin/vgdk.mjs scan",
+    "doctor": "node bin/vgdk.mjs doctor",
+    "qa": "node scripts/qa-verify.mjs"
+  }
+}

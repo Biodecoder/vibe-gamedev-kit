@@ -1,0 +1,104 @@
+# Vibe Game-Dev Kit (VGDK) backbone manifest — adapted from Minimal Vibe Coding Kit (camera.ai.vn)
+version: 2
+meta:
+  template_status: initialized
+  initialized_at: 2026-10-21T13:08:00.000Z
+  template_source: vibe-gamedev-kit
+  schema_version: 4
+  init_runbook: .vibekit/skills/vgdk-init/SKILL.md
+  init_done_marker: .vibekit/INIT_DONE
+
+project:
+  name: vibe-gamedev-kit
+  description: "Game-development AI rulebook, 9 Village Helpers, 4 Specialist Game-Dev Skills, and Interactive 2D Island Village Command Center."
+  type: gamedev-kit
+  primary_language: js
+  package_manager: npm
+  mode: greenfield
+  context: .vibekit/docs/GAME_CONTEXT.md
+
+gamedev:
+  engine: "threejs | canvas2d | pixijs | custom"
+  art_style: "pixel-art-2d | cel-shaded-3d | stylized-pbr | vector-2.5d"
+  performance_budget:
+    target_fps: 60
+    max_frame_ms: 16.6
+    max_draw_calls: 250
+    forbid_hot_loop_allocations: true
+    prefer_instancing_threshold: 32
+  hud_contract:
+    deconflict_bounding_boxes: true
+    center_crosshair_clearance_px: 120
+    responsive_viewports:
+      - "1920x1080"
+      - "1280x800"
+      - "390x844"
+  input_contract:
+    require_keyboard_fallback_when_pointerlock: true
+    supported_schemes:
+      - "WASD + Mouse / PointerLock"
+      - "WASD / Arrow Keyboard-Only Fallback"
+      - "Click / Touch Hotspots"
+  asset_pipeline:
+    validate_glb_bounds: true
+    validate_spritesheet_frames: true
+    shader_aa_required: true
+    safe_delete_trash_first: true
+
+paths:
+  root: .
+  apps:
+    - public/
+  source:
+    - public/src/
+    - bin/
+    - scripts/
+  tests:
+    - scripts/qa-verify.mjs
+  docs:
+    - AGENTS.md
+    - .vibekit/skills/
+  generated:
+    - node_modules/
+    - dist/
+
+conventions:
+  review_required_before_write: true
+  scope: repo
+  custom_rules:
+    - "Read backbone.yml and any docs/rea_*_report.json or GDD spec before modifying scenes, shaders, HUD, or gameplay loops."
+    - "No 'done' without playable proof: run headless Playwright visual + HUD overlap + console/shader checks after every vertical slice."
+    - "HUD Deconfliction: never place overlapping DOM/Canvas overlays; verify bounding-box clearance across top-hud, bottom-hud, crosshair, and modals."
+    - "60FPS Hot-Loop Discipline: never allocate temporary Vector3/Matrix4/Color/Image objects inside requestAnimationFrame ticks; reuse scratch objects and GPU instancing."
+    - "Input Fallback: any 3D/first-person/third-person camera using PointerLock must also support keyboard rotation/movement fallback for headless QA and accessibility."
+    - "Safe Asset Delete: never run permanent rm on .glb, .gltf, .png sprite strips, shaders, or save data; move superseded assets to recoverable .trash/ or OS Trash after user confirmation."
+    - "Plain-language explanations: lead with the outcome, use decision tables (Option, What it does, Cost, Risk, Recommended) when choices arise, and support /wait-what for jargon-free breakdowns."
+
+commands:
+  install: npm install
+  start: npm start
+  validate: npm run qa
+  verification:
+    asset_mirror: npm run mirror:verify
+    workspace_scan: npm run scan
+    e2e_visual_qa: npm run qa
+
+policy:
+  default_branch: main
+  branch_naming: "feat/<game-slice>"
+  commit_style: conventional
+  editable_paths: [.]
+  protected_paths:
+    - .git/
+    - .env*
+    - "**/*secret*"
+    - "**/node_modules/**"
+    - "**/*.glb.bak"
+
+agent_surfaces:
+  antigravity: .agent/skills/
+  claude: .claude/skills/
+  cursor: .cursor/skills/
+  codex: .agents/skills/
+  opencode: .agents/skills/
+  grok: .grok/skills/
